@@ -26,7 +26,10 @@ public class ProductService
                        .filter(p -> minPrice == null || p.getPrice() >= minPrice)
                        .filter(p -> maxPrice == null || p.getPrice() <= maxPrice)
                        .filter(p -> subCategory == null || subCategory.equalsIgnoreCase(p.getSubCategory()))
-                       .filter(Product::isFeatured)
+                /*This is making every product with a 0 not be shown because the
+                products with 1 are only being shown because 1 is true and 0 is false so
+                it's basically throwing the false away*/
+                //.filter(Product::isFeatured)
                        .toList();
     }
 
