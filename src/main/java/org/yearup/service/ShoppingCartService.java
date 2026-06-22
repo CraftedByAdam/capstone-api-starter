@@ -10,7 +10,6 @@ import org.yearup.repository.ShoppingCartRepository;
 @Service
 public class ShoppingCartService
 {
-    // a shopping cart is built from cart rows plus a product lookup for each row
     private final ShoppingCartRepository shoppingCartRepository;
     private final ProductService productService;
 
@@ -48,6 +47,16 @@ public class ShoppingCartService
         shoppingCartRepository.save(item);
         return getByUserId(userId);
     }
-    // add additional methods here
 
+    public ShoppingCart updateQuantity(int userId, int productId, CartItem updateItem) {
+        CartItem item = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
+
+        if (item != null) {
+            item.setQuantity(updateItem.getQuantity());
+            shoppingCartRepository.save(item);
+        }
+
+        return getByUserId(userId);
+    }
+    // add additional methods here
 }
