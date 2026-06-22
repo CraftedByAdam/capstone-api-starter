@@ -26,12 +26,14 @@ public class CategoriesController
     }
 
     @GetMapping
+    @PreAuthorize("permitAll")
     public List<Category> getAll()
     {
         return categoryService.getAllCategories();
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("permitAll")
     public Category getById(@PathVariable int id)
     {
         Category category = categoryService.getById(id);
@@ -43,6 +45,7 @@ public class CategoriesController
     }
 
     @GetMapping("/{categoryId}/products")
+    @PreAuthorize("permitAll")
     public List<Product> getProductsById(@PathVariable int categoryId)
     {
         return productService.listByCategoryId(categoryId);
