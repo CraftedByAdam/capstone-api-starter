@@ -11,14 +11,11 @@ import org.yearup.service.UserService;
 
 import java.security.Principal;
 
-// convert this class to a REST controller
 @RestController
-// only logged in users should have access to these actions
 @RequestMapping("/cart")
 @CrossOrigin
 public class ShoppingCartController
 {
-    // a shopping cart controller depends on the service layer
     private ShoppingCartService shoppingCartService;
     private UserService userService;
 
@@ -38,12 +35,9 @@ public class ShoppingCartController
         return shoppingCartService.getByUserId(userId);
     }
 
-    // add a POST method to add a product to the cart - the url should be
-    // https://localhost:8080/cart/products/15  (15 is the productId to be added)
     @PostMapping("/products/{productId}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ShoppingCart> updatedCart(Principal principal, @PathVariable int productId) {
-        // return the updated cart with status 201 Created
         String userName = principal.getName();
         User user = userService.getByUserName(userName);
         int userId = user.getId();
