@@ -28,7 +28,7 @@ public class CategoryService
 
     public Category create(Category category)
     {
-        category.setCategoryId(0);
+        category.setCategoryId(category.getCategoryId());
         return categoryRepository.save(category);
     }
 
