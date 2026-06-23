@@ -1,10 +1,7 @@
 package org.yearup.controllers;
 
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.yearup.models.Profile;
 import org.yearup.models.User;
 import org.yearup.service.ProfileService;
@@ -26,7 +23,7 @@ public class ProfileController {
     }
 
     @GetMapping
-    @PreAuthorize("isAuthenticated")
+    @PreAuthorize("isAuthenticated()")
     public Profile getProfile(Principal principal) {
 
         String userName = principal.getName();
@@ -34,5 +31,16 @@ public class ProfileController {
         int userId = user.getId();
 
         return profileService.getById(userId);
+    }
+
+    @PutMapping
+    @PreAuthorize("isAuthenticated()")
+    public Profile updateProfile(Principal principal, @RequestBody Profile profile) {
+
+        String userName = principal.getName();
+        User user = userService.getByUserName(userName);
+        int userId = user.getId();
+
+        return profileService.update(userId, profile);
     }
 }
