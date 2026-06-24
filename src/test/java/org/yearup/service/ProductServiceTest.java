@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,16 +31,12 @@ class ProductServiceTest {
         // Arrange
         List<Product> testProducts = new ArrayList<>();
 
-        Product hat = new Product();
-        hat.setFeatured(true);
+        Product hat = new Product(1, "hat", 121.0, 1, "sel hat", "Subssss", 50, true, null);
+        Product shirt = new Product(2, "shirt", 131.0, 2, "sel shirt", "Subssss", 100, false, null);
+        Product bag = new Product(3, "bag", 111.0, 3, "sel bag", "Subssss", 100, true, null);
+
         testProducts.add(hat);
-
-        Product shirt = new Product();
-        shirt.setFeatured(false);
         testProducts.add(shirt);
-
-        Product bag = new Product();
-        bag.setFeatured(true);
         testProducts.add(bag);
 
         when(productRepository.findAll()).thenReturn(testProducts);
@@ -55,23 +52,19 @@ class ProductServiceTest {
     public void update_shouldUpdateStock_whenStockIsChanged() {
 
         // arrange
-        int productId = 1;
+        Product fakeOriginalProduct = new Product(1, "product1", 121.0, 1, "sel ppppp", "Subssss", 50, true, null);
+        Product fakeNewProduct = new Product(1, "product1", 121.0, 1, "sel ppppp", "Subssss", 100, true, null);
 
-        Product fakeOriginalProduct = new Product();
-        fakeOriginalProduct.setStock(50);
-
-        Product fakeNewProduct = new Product();
-        fakeNewProduct.setStock(100);
 
         when(productRepository.findById(1)).thenReturn(Optional.of(fakeOriginalProduct));
         when(productRepository.save(fakeOriginalProduct)).thenReturn(fakeOriginalProduct);
 
         // act
-        productService.update(productId, fakeNewProduct);
-        Product updateProduct = productService.update(productId, fakeNewProduct);
+        Product updateProduct = productService.update(1, fakeNewProduct);
 
         // assert
         assertEquals(100, updateProduct.getStock());
+        verify(productRepository).save(fakeOriginalProduct);
 
     }
 }
