@@ -24,8 +24,10 @@ public class ProfileController {
 
     @GetMapping
     @PreAuthorize("isAuthenticated()")
+    //Returns the logged-in user info
     public Profile getProfile(Principal principal) {
 
+        //Used the Principle object to turn the userService into a userId so I could get the right profile.
         String userName = principal.getName();
         User user = userService.getByUserName(userName);
         int userId = user.getId();
@@ -35,8 +37,10 @@ public class ProfileController {
 
     @PutMapping
     @PreAuthorize("isAuthenticated()")
+    //The user can change their personal information.
     public Profile updateProfile(Principal principal, @RequestBody Profile profile) {
 
+        //Takes the new data from the @RequestBody and passes it to the service to be saved.
         String userName = principal.getName();
         User user = userService.getByUserName(userName);
         int userId = user.getId();
