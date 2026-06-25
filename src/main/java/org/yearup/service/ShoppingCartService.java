@@ -20,10 +20,12 @@ public class ShoppingCartService
         this.productService = productService;
     }
 
+    //Builds the shopping cart for the user.
     public ShoppingCart getByUserId(int userId)
     {
         ShoppingCart shoppingCart = new ShoppingCart();
 
+        //Gets all items from the database
         for (CartItem cartItem : shoppingCartRepository.findByUserId(userId)) {
             Product product = productService.getById(cartItem.getProductId());
             ShoppingCartItem item = new ShoppingCartItem();
@@ -34,6 +36,7 @@ public class ShoppingCartService
         return shoppingCart;
     }
 
+    //Updates the cart by adding an item to it.
     public ShoppingCart updateCart(int userId, int productId) {
         CartItem item = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
         if (item == null) {
@@ -49,7 +52,9 @@ public class ShoppingCartService
         return getByUserId(userId);
     }
 
+    //When the user wants to set a specific number for the quantity.
     public ShoppingCart updateQuantity(int userId, int productId, CartItem updateItem) {
+        //Find the item first
         CartItem item = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
 
         if (item != null) {
@@ -60,6 +65,7 @@ public class ShoppingCartService
         return getByUserId(userId);
     }
 
+    //Added @Transactional because a custom delete commands need a safety envelope to run.
     @Transactional
     public void clearCart(int userId) {
         shoppingCartRepository.deleteByUserId(userId);
