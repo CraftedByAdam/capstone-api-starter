@@ -41,9 +41,13 @@ Follow these steps to get your application running within IntelliJ IDEA:
 - Java 17
 - Git/GitHub
 
-## Demo
+## Front-End Demo
 
-![]()
+![EasyShop Demo](EasyShop-Demo.gif)
+
+## Insomnia Demo
+
+![Insomnia Demo](Insomnia_Demo.gif)
 
 ## Resources
 
