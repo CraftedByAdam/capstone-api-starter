@@ -52,8 +52,8 @@ class ProductServiceTest {
     public void update_shouldUpdateStock_whenStockIsChanged() {
 
         // arrange
-        Product fakeOriginalProduct = new Product(1, "product1", 121.0, 1, "sel ppppp", "Subssss", 50, true, null);
-        Product fakeNewProduct = new Product(1, "product1", 121.0, 1, "sel ppppp", "Subssss", 100, true, null);
+        Product fakeOriginalProduct = new Product(1, "product1", 121.0, 1, "sel product", "Sub", 50, true, null);
+        Product fakeNewProduct = new Product(1, "product1", 121.0, 1, "sel product", "Sub", 100, true, null);
 
 
         when(productRepository.findById(1)).thenReturn(Optional.of(fakeOriginalProduct));
